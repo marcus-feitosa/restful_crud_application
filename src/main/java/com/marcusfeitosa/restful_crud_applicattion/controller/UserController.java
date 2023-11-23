@@ -6,6 +6,8 @@ import com.marcusfeitosa.restful_crud_applicattion.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class UserController {
 
@@ -22,5 +24,10 @@ public class UserController {
     @GetMapping("/user/{id}")
     public User getUseryId(@PathVariable Long id){
         return userService.getUserById(id);
+    }
+
+    @GetMapping("/user")
+    public List<User> getAll(){
+        return userService.gettAll();
     }
 }
