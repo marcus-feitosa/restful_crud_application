@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.marcusfeitosa</groupId>
-    <artifactId>restful_crud_applicattion</artifactId>
+    <artifactId>restful_crud_application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>restful_crud_applicattion</name>
     <description>restful_crud_applicattion</description>

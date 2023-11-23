@@ -4,10 +4,7 @@ import com.marcusfeitosa.restful_crud_applicattion.entity.User;
 import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
 import com.marcusfeitosa.restful_crud_applicattion.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController {
@@ -20,5 +17,10 @@ public class UserController {
     @PostMapping ("/user")
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
+    }
+
+    @GetMapping("/user/{id}")
+    public User getUseryId(@PathVariable Long id){
+        return userService.getUserById(id);
     }
 }
