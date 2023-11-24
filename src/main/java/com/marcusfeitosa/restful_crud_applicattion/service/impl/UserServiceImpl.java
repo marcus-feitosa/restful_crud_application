@@ -4,8 +4,8 @@ import com.marcusfeitosa.restful_crud_applicattion.entity.User;
 import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
 import com.marcusfeitosa.restful_crud_applicattion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
         actualUser.setLastName(user.getLastName());
         actualUser.setEmail(user.getEmail());
         return userRepository.save(actualUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
 
