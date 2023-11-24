@@ -5,6 +5,7 @@ import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
 import com.marcusfeitosa.restful_crud_applicattion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -26,6 +27,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> gettAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(User user) {
+        User actualUser = userRepository.findById(user.getId()).get();
+        actualUser.setFirstName(user.getFirstName());
+        actualUser.setLastName(user.getLastName());
+        actualUser.setEmail(user.getEmail());
+        return userRepository.save(actualUser);
     }
 
 

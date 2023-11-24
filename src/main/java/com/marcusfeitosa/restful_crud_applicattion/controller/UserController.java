@@ -4,6 +4,7 @@ import com.marcusfeitosa.restful_crud_applicattion.entity.User;
 import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
 import com.marcusfeitosa.restful_crud_applicattion.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,19 @@ public class UserController {
     public User createUser(@RequestBody User user){
         return userService.createUser(user);
     }
+    @PutMapping("/user/{id}")
+    public ResponseEntity updateUser(
+            @PathVariable Long id,
+            @RequestBody User user){
+        user.setId(id);
+        userService.updateUser(user);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/user/{id}")
     public User getUseryId(@PathVariable Long id){
         return userService.getUserById(id);
     }
-
     @GetMapping("/user")
     public List<User> getAll(){
         return userService.gettAll();
