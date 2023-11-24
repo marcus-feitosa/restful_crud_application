@@ -1,9 +1,9 @@
 package com.marcusfeitosa.restful_crud_applicattion.controller;
 
+import com.marcusfeitosa.restful_crud_applicattion.dto.UserDTO;
 import com.marcusfeitosa.restful_crud_applicattion.entity.User;
 import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
-import com.marcusfeitosa.restful_crud_applicattion.service.impl.UserServiceImpl;
-import jakarta.servlet.annotation.HttpConstraint;
+import com.marcusfeitosa.restful_crud_applicattion.service.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,13 +16,14 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
     @PostMapping ("/user")
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDTO createUser(@RequestBody UserDTO userDTO){
+        return userService.createUser(userDTO);
     }
     @PutMapping("/user/{id}")
     @Transactional
@@ -38,6 +39,7 @@ public class UserController {
     public User getUseryId(@PathVariable Long id){
         return userService.getUserById(id);
     }
+
     @GetMapping("/user")
     public List<User> getAll(){
         return userService.gettAll();
