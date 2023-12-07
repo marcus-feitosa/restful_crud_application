@@ -2,6 +2,7 @@ package com.marcusfeitosa.restful_crud_applicattion.service;
 
 import com.marcusfeitosa.restful_crud_applicattion.dto.UserDTO;
 import com.marcusfeitosa.restful_crud_applicattion.entity.User;
+import com.marcusfeitosa.restful_crud_applicattion.exception.ResourceNotFoundException;
 import com.marcusfeitosa.restful_crud_applicattion.mapper.UserMapper;
 import com.marcusfeitosa.restful_crud_applicattion.respository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,32 @@ public class UserService {
     }
 
 
-    public User getUserById(Long id) {
-       return userRepository.findById(id).get();
+    public UserDTO getUserById(Long id) {
+       User user = userRepository.findById(id).orElseThrow(
+               () -> new ResourceNotFoundException("User", "id", id)
+       );
+       return UserMapper.mapToUserDTO(user);
     }
 
 
-    public List<User> gettAll() {
-        return userRepository.findAll();
+    public List<UserDTO> gettAll() {
+        List<User> users =  userRepository.findAll();
+        return users
+                .stream()
+                .map(UserMapper::mapToUserDTO)
+                .toList();
     }
 
 
-    public User updateUser(User user) {
-        User actualUser = userRepository.findById(user.getId()).get();
-        actualUser.setFirstName(user.getFirstName());
-        actualUser.setLastName(user.getLastName());
-        actualUser.setEmail(user.getEmail());
-        return userRepository.save(actualUser);
+    public UserDTO updateUser(UserDTO userDTO) {
+        User actualUser = userRepository.findById(userDTO.getId()).orElseThrow(
+                () -> new ResourceNotFoundException("User", "id", userDTO.getId())
+        );
+        actualUser.setFirstName(userDTO.getFirstName());
+        actualUser.setLastName(userDTO.getLastName());
+        actualUser.setEmail(userDTO.getEmail());
+        User updatedUser =  userRepository.save(actualUser);
+        return UserMapper.mapToUserDTO(updatedUser);
     }
 
 

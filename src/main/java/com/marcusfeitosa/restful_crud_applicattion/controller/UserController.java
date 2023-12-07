@@ -26,22 +26,23 @@ public class UserController {
         return userService.createUser(userDTO);
     }
     @PutMapping("/user/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     @Transactional
-    public ResponseEntity updateUser(
+    public UserDTO updateUser(
             @PathVariable Long id,
-            @RequestBody User user){
-        user.setId(id);
-        userService.updateUser(user);
-        return ResponseEntity.ok().build();
+            @RequestBody UserDTO userDTO){
+        userDTO.setId(id);
+        userService.updateUser(userDTO);
+        return userDTO;
     }
 
     @GetMapping("/user/{id}")
-    public User getUseryId(@PathVariable Long id){
+    public UserDTO getUseryId(@PathVariable Long id){
         return userService.getUserById(id);
     }
 
     @GetMapping("/user")
-    public List<User> getAll(){
+    public List<UserDTO> getAll(){
         return userService.gettAll();
     }
 
